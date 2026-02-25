@@ -16,11 +16,10 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!mounted) return;
     if (pathname === '/login') return;
-    if (!getToken()) {
-      router.replace('/login');
-    }
+    if (!getToken()) router.replace('/login');
   }, [mounted, pathname, router]);
 
   if (!mounted) return <div className="min-h-screen flex items-center justify-center bg-slate-900 text-white">Loading...</div>;
+  if (pathname !== '/login' && !getToken()) return <div className="min-h-screen flex items-center justify-center bg-slate-900 text-white">Redirecting...</div>;
   return <>{children}</>;
 }

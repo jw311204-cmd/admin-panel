@@ -5,7 +5,7 @@ import AuthGuard from "@/components/AuthGuard";
 export const metadata: Metadata = {
   title: "To The Top Now — Admin",
   description: "Admin panel",
-  robots: "noindex, nofollow",
+  robots: { index: false, follow: false },
 };
 
 export default function RootLayout({

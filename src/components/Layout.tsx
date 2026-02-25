@@ -10,6 +10,7 @@ const nav = [
   { href: '/promo-codes', label: 'Promo Codes' },
   { href: '/revenue', label: 'Revenue' },
   { href: '/assignments', label: 'Promo Assignments' },
+  { href: '/change-password', label: 'Change Password' },
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
