@@ -4,6 +4,12 @@ import { useEffect, useState } from 'react';
 import { api } from '@/lib/api';
 import Layout from '@/components/Layout';
 
+const API_BASE = (process.env.NEXT_PUBLIC_API_URL || 'https://everest-backend-qquj.onrender.com').replace(/\/api\/?$/, '');
+
+function getRefLink(code: string) {
+  return `${API_BASE}/ref/${encodeURIComponent(code)}`;
+}
+
 type PromoCode = {
   id: number;
   code: string;
@@ -23,6 +29,18 @@ export default function PromoCodesPage() {
   const [formInfluencerId, setFormInfluencerId] = useState<number | ''>('');
   const [submitting, setSubmitting] = useState(false);
   const [usageCounts, setUsageCounts] = useState<Record<string, number>>({});
+  const [copiedCode, setCopiedCode] = useState<string | null>(null);
+
+  const copyLink = async (code: string) => {
+    const link = getRefLink(code);
+    try {
+      await navigator.clipboard.writeText(link);
+      setCopiedCode(code);
+      setTimeout(() => setCopiedCode(null), 2000);
+    } catch {
+      alert('Failed to copy');
+    }
+  };
 
   const load = async () => {
     const [p, i] = await Promise.all([api.getPromoCodes(), api.getPromoAssignments()]);
@@ -101,6 +119,7 @@ export default function PromoCodesPage() {
             <tr>
               <th className="px-4 py-3">Code</th>
               <th className="px-4 py-3">Influencer</th>
+              <th className="px-4 py-3">Link</th>
               <th className="px-4 py-3">Active</th>
               <th className="px-4 py-3">Usage Count</th>
               <th className="px-4 py-3">Created</th>
@@ -111,6 +130,19 @@ export default function PromoCodesPage() {
               <tr key={p.id}>
                 <td className="px-4 py-3 text-white font-mono">{p.code}</td>
                 <td className="px-4 py-3 text-slate-300">{p.influencer?.name ?? '—'}</td>
+                <td className="px-4 py-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-slate-400 text-xs truncate max-w-[180px]" title={getRefLink(p.code)}>
+                      {getRefLink(p.code)}
+                    </span>
+                    <button
+                      onClick={() => copyLink(p.code)}
+                      className="shrink-0 px-2 py-1 rounded bg-slate-700 hover:bg-indigo-600 text-slate-300 hover:text-white text-xs font-medium transition-colors"
+                    >
+                      {copiedCode === p.code ? 'Copied!' : 'Copy'}
+                    </button>
+                  </div>
+                </td>
                 <td className="px-4 py-3">{p.isActive ? <span className="text-green-400">Yes</span> : <span className="text-red-400">No</span>}</td>
                 <td className="px-4 py-3 text-white">{usageCounts[p.code] ?? 0}</td>
                 <td className="px-4 py-3 text-slate-400">{p.createdAt ? new Date(p.createdAt).toLocaleDateString() : '—'}</td>
