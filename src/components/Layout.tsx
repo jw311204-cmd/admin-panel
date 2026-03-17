@@ -9,6 +9,7 @@ const nav = [
   { href: '/influencers', label: 'Influencers' },
   { href: '/promo-codes', label: 'Promo Codes' },
   { href: '/revenue', label: 'Revenue' },
+  { href: '/transactions', label: 'All Transactions' },
   { href: '/assignments', label: 'Promo Assignments' },
   { href: '/change-password', label: 'Change Password' },
 ];

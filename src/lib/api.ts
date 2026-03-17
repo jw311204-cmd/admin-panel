@@ -60,6 +60,7 @@ export const api = {
     fetchApi('/api/admin/promo-codes', { method: 'POST', body: JSON.stringify(body) }),
   getRevenueSummary: () => fetchApi('/api/admin/revenue-summary'),
   getPromoAssignments: () => fetchApi('/api/admin/promo-assignments'),
+  getTransactions: () => fetchApi('/api/admin/transactions'),
   changePassword: (body: { currentPassword: string; newPassword: string }) =>
     fetchApi('/api/admin/auth/change-password', { method: 'PATCH', body: JSON.stringify(body) }),
 };
