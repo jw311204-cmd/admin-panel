@@ -35,7 +35,7 @@ export default function TransactionsPage() {
     <Layout>
       <h1 className="text-2xl font-bold text-white mb-6">All Transactions</h1>
       <p className="text-slate-400 text-sm mb-4">
-        Strava profile (name, email) bilan purchase — qaysi user to&apos;lov qilganini ko&apos;rasiz.
+        Strava profile (name, email) linked to each purchase — see which user made the payment.
       </p>
       <div className="overflow-x-auto rounded-xl border border-slate-700">
         <table className="w-full text-left">
